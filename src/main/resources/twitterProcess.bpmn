@@ -28,17 +28,17 @@
     <bpmn:sequenceFlow id="Flow_1mr0uk3" name="Yes" sourceRef="Gateway_1m2ep7g" targetRef="Activity_1edk266">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${approved}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
-    <bpmn:sequenceFlow id="Flow_0qufr81" sourceRef="Activity_0o1ya1b" targetRef="Gateway_1m2ep7g" />
-    <bpmn:sequenceFlow id="Flow_109x70i" sourceRef="StartEvent_1" targetRef="Activity_0o1ya1b" />
-    <bpmn:serviceTask id="Activity_1edk266" name="Send Tweet" camunda:class="com.camunda.training.CreateTweetDelegate">
+    <bpmn:sequenceFlow id="Flow_0qufr81" sourceRef="ApproveTweet_UserTask" targetRef="Gateway_1m2ep7g" />
+    <bpmn:sequenceFlow id="Flow_109x70i" sourceRef="StartEvent_1" targetRef="ApproveTweet_UserTask" />
+    <bpmn:serviceTask id="Activity_1edk266" name="Send Tweet" camunda:delegateExpression="${createTweetDelegate}">
       <bpmn:incoming>Flow_1mr0uk3</bpmn:incoming>
       <bpmn:outgoing>Flow_0dx51ys</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:manualTask id="Activity_0o1ya1b" name="Approve Tweet">
+    <bpmn:userTask id="ApproveTweet_UserTask" name="Approve Tweet">
       <bpmn:documentation textFormat="text/x-comments" />
       <bpmn:incoming>Flow_109x70i</bpmn:incoming>
       <bpmn:outgoing>Flow_0qufr81</bpmn:outgoing>
-    </bpmn:manualTask>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TwitterQa">
@@ -103,7 +103,7 @@
       <bpmndi:BPMNShape id="Activity_0t2udzt_di" bpmnElement="Activity_1edk266">
         <dc:Bounds x="558" y="107" width="100" height="80" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_188b6vy_di" bpmnElement="Activity_0o1ya1b">
+      <bpmndi:BPMNShape id="Activity_1m7xto8_di" bpmnElement="ApproveTweet_UserTask">
         <dc:Bounds x="276" y="107" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>

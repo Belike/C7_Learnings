@@ -3,6 +3,7 @@ package com.camunda.training;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.engine.test.mock.Mocks;
 import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.Before;
 import org.junit.ClassRule;
@@ -10,7 +11,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +28,7 @@ public class ProcessJUnitTest {
   @Before
   public void setup(){
       init(rule.getProcessEngine());
+      Mocks.register("createTweetDelegate", new LoggerDelegate());
   }
 
   @Test
@@ -38,6 +39,9 @@ public class ProcessJUnitTest {
       variables.put("approved", true);
       variables.put("content", "JUnit-Test from Norman with Random Number: " + ThreadLocalRandom.current().nextInt());
       ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("TwitterQa", variables);
+
+      //User Task Queries come here!
+
       assertThat(processInstance).isEnded();
   }
 

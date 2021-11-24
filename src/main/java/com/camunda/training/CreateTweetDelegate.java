@@ -3,13 +3,14 @@ package com.camunda.training;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
+import org.springframework.stereotype.Component;
 import twitter4j.Twitter;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.AccessToken;
 
-import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
+@Component
 public class CreateTweetDelegate implements JavaDelegate {
 
     @Override
