@@ -1,0 +1,24 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label class="control-label col-md-4">This is the content of the tweet:</label>
+        <div class="col-md-8">
+            <input type="text"
+                   cam-variable-name="content"
+                   cam-variable-type="String"
+                   readonly="true"
+                   class="form-control" />
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-4">Do you approve the tweet?</label>
+        <div class="col-md-8">
+            <select class="form-control" cam-variable-name="approved" cam-variable-type="Boolean">
+                <option value="true">Yes, we approve</option>
+                <option value="false">Nope, we do not like this!</option>
+            </select>
+        </div>
+    </div>
+    <script cam-script type="text/form-script">
+    // custom JavaScript goes here
+  </script>
+</form>

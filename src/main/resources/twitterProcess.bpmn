@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_0oekh9t" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.11.1" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
   <bpmn:process id="TwitterQa" name="TwitterQa" isExecutable="true">
-    <bpmn:startEvent id="TweetReceived_StartEvent" name="Tweet received">
+    <bpmn:startEvent id="TweetReceived_StartEvent" name="Tweet received" camunda:formKey="embedded:app:forms/StartEvent.html">
       <bpmn:outgoing>Flow_109x70i</bpmn:outgoing>
     </bpmn:startEvent>
     <bpmn:exclusiveGateway id="Gateway_1m2ep7g" name="Tweet approved?">
@@ -34,7 +34,7 @@
       <bpmn:incoming>Flow_1mr0uk3</bpmn:incoming>
       <bpmn:outgoing>Flow_0dx51ys</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:userTask id="ApproveTweet_UserTask" name="Approve Tweet" camunda:candidateGroups="management">
+    <bpmn:userTask id="ApproveTweet_UserTask" name="Approve Tweet" camunda:formKey="embedded:app:forms/ReviewTask.html" camunda:candidateGroups="management">
       <bpmn:documentation textFormat="text/x-comments" />
       <bpmn:incoming>Flow_109x70i</bpmn:incoming>
       <bpmn:outgoing>Flow_0qufr81</bpmn:outgoing>
