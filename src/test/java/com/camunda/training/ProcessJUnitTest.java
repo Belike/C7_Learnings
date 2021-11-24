@@ -3,7 +3,9 @@ package com.camunda.training;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
+import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.assertj.core.api.Assertions.*;
@@ -19,8 +22,8 @@ import static org.assertj.core.api.Assertions.*;
 @RunWith(JUnit4.class)
 public class ProcessJUnitTest {
 
-  @Rule
-  public ProcessEngineRule rule = new ProcessEngineRule();
+  @Rule @ClassRule
+  public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 
   @Before
   public void setup(){
@@ -33,6 +36,7 @@ public class ProcessJUnitTest {
 
       Map<String, Object> variables = new HashMap<>();
       variables.put("approved", true);
+      variables.put("content", "JUnit-Test from Norman with Random Number: " + ThreadLocalRandom.current().nextInt());
       ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("TwitterQa", variables);
       assertThat(processInstance).isEnded();
   }
