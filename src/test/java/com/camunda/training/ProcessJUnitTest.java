@@ -1,6 +1,7 @@
 package com.camunda.training;
 
 import org.camunda.bpm.engine.runtime.ProcessInstance;
+import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.mock.Mocks;
@@ -12,7 +13,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -36,11 +39,30 @@ public class ProcessJUnitTest {
   public void testHappyPath() {
 
       Map<String, Object> variables = new HashMap<>();
-      variables.put("approved", true);
       variables.put("content", "JUnit-Test from Norman with Random Number: " + ThreadLocalRandom.current().nextInt());
       ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("TwitterQa", variables);
+      assertThat(processInstance).isStarted();
 
-      //User Task Queries come here!
+      /*User Task Queries old way without Help from Camunda BPM Assert
+      assertThat(processInstance).isWaitingAt("ApproveTweet_UserTask");
+      List<Task> taskList = taskService().createTaskQuery()
+              .taskCandidateGroup("management")
+              .processInstanceId(processInstance.getId())
+              .list();
+
+      assertThat(taskList).isNotNull();
+      assertThat(taskList).hasSize(1);
+
+      Task task = taskList.get(0);
+      Map<String, Object> approvedMap = new HashMap<>();
+      approvedMap.put("approved", true);
+      taskService().complete(task.getId(), approvedMap);
+       */
+
+      //Camunda BPM Assert
+      assertThat(processInstance).isWaitingAt("ApproveTweet_UserTask");
+      assertThat(processInstance).task().hasCandidateGroup("management");
+      complete(task(), withVariables("approved", true));
 
       assertThat(processInstance).isEnded();
   }
