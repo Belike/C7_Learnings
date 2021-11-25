@@ -15,7 +15,7 @@
     <bpmn:scriptTask id="SendRejectionNotification_ScriptTask" name="Send rejection notifaction" scriptFormat="JavaScript">
       <bpmn:incoming>Flow_1ybbjr8</bpmn:incoming>
       <bpmn:outgoing>Flow_1wh16nf</bpmn:outgoing>
-      <bpmn:script>print('Tweet rejected with content: '+execution.getVariable("content"));</bpmn:script>
+      <bpmn:script>print('Tweet rejected with content: ' + execution.getVariable('content'));</bpmn:script>
     </bpmn:scriptTask>
     <bpmn:endEvent id="TweetPosted_EndEvent" name="Tweet posted">
       <bpmn:incoming>Flow_0dx51ys</bpmn:incoming>

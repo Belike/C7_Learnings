@@ -13,6 +13,11 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.context.SpringBootTest;
+import twitter4j.TwitterException;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -22,22 +27,29 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
 import static org.assertj.core.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(JUnit4.class)
+@Deployment(resources = "twitterProcess.bpmn")
 public class ProcessJUnitTest {
+
+  @Mock
+  TwitterService twitterService;
 
   @Rule @ClassRule
   public static ProcessEngineRule rule = TestCoverageProcessEngineRuleBuilder.create().build();
 
   @Before
   public void setup(){
+      MockitoAnnotations.initMocks(this);
       init(rule.getProcessEngine());
-      Mocks.register("createTweetDelegate", new LoggerDelegate());
+      Mocks.register("createTweetDelegate", new CreateTweetDelegate(twitterService));
   }
 
   @Test
-  @Deployment(resources = "twitterProcess.bpmn")
-  public void testHappyPath() {
+  public void testHappyPath() throws TwitterException {
+
+      Mockito.when(twitterService.tweet(anyString())).thenReturn(1L);
 
       Map<String, Object> variables = new HashMap<>();
       variables.put("content", "JUnit-Test from Norman with Random Number: " + ThreadLocalRandom.current().nextInt());
@@ -76,7 +88,23 @@ public class ProcessJUnitTest {
       assertThat(processInstance).isWaitingAt("SendTweet_ServiceTask");
       execute(job());
 
-      assertThat(processInstance).isEnded().hasPassed("SendTweet_ServiceTask").hasPassed("ApproveTweet_UserTask");
+      assertThat(processInstance).isEnded()
+              .hasPassed("SendTweet_ServiceTask")
+              .hasPassed("ApproveTweet_UserTask")
+              .variables().containsEntry("twitterStatus", 1L);
+  }
+
+  @Test
+  public void testTweetRejected(){
+      ProcessInstance processInstance = runtimeService()
+              .createProcessInstanceByKey("TwitterQa")
+              .setVariables(withVariables("approved", false, "content", "Very awful words to harm the world"))
+              .startAfterActivity("ApproveTweet_UserTask")
+              .execute();
+      assertThat(processInstance).isStarted();
+
+      assertThat(processInstance).isEnded().hasPassed("TweetRejected_EndEvent");
+
   }
 
 }

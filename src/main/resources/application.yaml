@@ -14,4 +14,6 @@ camunda.bpm:
   job-execution:
     max-wait: 10000
   default-serialization-format: application/json
+  database:
+    schema-update: false
 server.port: 8080
