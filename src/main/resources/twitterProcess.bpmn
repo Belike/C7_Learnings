@@ -12,17 +12,12 @@
     <bpmn:endEvent id="TweetRejected_EndEvent" name="Tweet rejected">
       <bpmn:incoming>Flow_1wh16nf</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:scriptTask id="SendRejectionNotification_ScriptTask" name="Send rejection notifaction" scriptFormat="JavaScript">
-      <bpmn:incoming>Flow_1ybbjr8</bpmn:incoming>
-      <bpmn:outgoing>Flow_1wh16nf</bpmn:outgoing>
-      <bpmn:script>print('Tweet rejected with content: ' + execution.getVariable('content'));</bpmn:script>
-    </bpmn:scriptTask>
     <bpmn:endEvent id="TweetPosted_EndEvent" name="Tweet posted">
       <bpmn:incoming>Flow_0dx51ys</bpmn:incoming>
     </bpmn:endEvent>
-    <bpmn:sequenceFlow id="Flow_1wh16nf" sourceRef="SendRejectionNotification_ScriptTask" targetRef="TweetRejected_EndEvent" />
+    <bpmn:sequenceFlow id="Flow_1wh16nf" sourceRef="SendRejectionNotification_ExternalTask" targetRef="TweetRejected_EndEvent" />
     <bpmn:sequenceFlow id="Flow_0dx51ys" sourceRef="SendTweet_ServiceTask" targetRef="TweetPosted_EndEvent" />
-    <bpmn:sequenceFlow id="Flow_1ybbjr8" name="No" sourceRef="Gateway_1m2ep7g" targetRef="SendRejectionNotification_ScriptTask">
+    <bpmn:sequenceFlow id="Flow_1ybbjr8" name="No" sourceRef="Gateway_1m2ep7g" targetRef="SendRejectionNotification_ExternalTask">
       <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${not approved}</bpmn:conditionExpression>
     </bpmn:sequenceFlow>
     <bpmn:sequenceFlow id="Flow_1mr0uk3" name="Yes" sourceRef="Gateway_1m2ep7g" targetRef="SendTweet_ServiceTask">
@@ -39,6 +34,10 @@
       <bpmn:incoming>Flow_109x70i</bpmn:incoming>
       <bpmn:outgoing>Flow_0qufr81</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:serviceTask id="SendRejectionNotification_ExternalTask" name="Send rejection notifaction" camunda:type="external" camunda:topic="notification">
+      <bpmn:incoming>Flow_1ybbjr8</bpmn:incoming>
+      <bpmn:outgoing>Flow_1wh16nf</bpmn:outgoing>
+    </bpmn:serviceTask>
   </bpmn:process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TwitterQa">
@@ -91,9 +90,6 @@
           <dc:Bounds x="745" y="335" width="71" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_010ohx2_di" bpmnElement="SendRejectionNotification_ScriptTask">
-        <dc:Bounds x="558" y="270" width="100" height="80" />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_06kx6ha_di" bpmnElement="TweetPosted_EndEvent" bioc:stroke="#000" bioc:fill="#fff">
         <dc:Bounds x="762" y="129" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -105,6 +101,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_0syacb5_di" bpmnElement="ApproveTweet_UserTask">
         <dc:Bounds x="276" y="107" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_16tbgt2_di" bpmnElement="SendRejectionNotification_ExternalTask">
+        <dc:Bounds x="558" y="270" width="100" height="80" />
       </bpmndi:BPMNShape>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

@@ -103,6 +103,13 @@ public class ProcessJUnitTest {
               .execute();
       assertThat(processInstance).isStarted();
 
+      //External Task
+      assertThat(processInstance)
+              .isWaitingAt("SendRejectionNotification_ExternalTask")
+              .externalTask()
+              .hasTopicName("notification");
+      complete(externalTask());
+
       assertThat(processInstance).isEnded().hasPassed("TweetRejected_EndEvent");
 
   }
