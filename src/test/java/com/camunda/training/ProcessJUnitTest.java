@@ -1,5 +1,6 @@
 package com.camunda.training;
 
+import org.camunda.bpm.engine.runtime.Job;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
@@ -64,7 +65,18 @@ public class ProcessJUnitTest {
       assertThat(processInstance).task().hasCandidateGroup("management");
       complete(task(), withVariables("approved", true));
 
-      assertThat(processInstance).isEnded();
+      /*Executing Job without Helpers
+      List<Job> jobList = jobQuery().processInstanceId(processInstance.getId()).list();
+      assertThat(jobList).hasSize(1);
+      Job job = jobList.get(0);
+      execute(job);
+       */
+
+      //Camunda BPM Assert
+      assertThat(processInstance).isWaitingAt("SendTweet_ServiceTask");
+      execute(job());
+
+      assertThat(processInstance).isEnded().hasPassed("SendTweet_ServiceTask").hasPassed("ApproveTweet_UserTask");
   }
 
 }
