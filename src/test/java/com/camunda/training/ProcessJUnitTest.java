@@ -114,4 +114,39 @@ public class ProcessJUnitTest {
 
   }
 
+  @Test
+  public void testSuperUserTweet(){
+      ProcessInstance processInstance = runtimeService()
+              .createMessageCorrelation("superuserTweet")
+              .setVariable("content", "My Exercise 11 by Norman with Random Number")
+              .correlateWithResult()
+              .getProcessInstance();
+
+      assertThat(processInstance).isStarted();
+
+      //Send Tweet
+      assertThat(processInstance).isWaitingAt("SendTweet_ServiceTask");
+      execute(job());
+      assertThat(processInstance).isEnded().variables().containsEntry("content", "My Exercise 11 by Norman with Random Number");
+  }
+
+  @Test
+  public void testTweetWithdrawn() {
+      ProcessInstance processInstance = runtimeService()
+              .startProcessInstanceByKey("TwitterQa", withVariables("content", "Tweet will be withdrawn"));
+
+      assertThat(processInstance).isStarted();
+
+      //User Task
+      // Correlation can be made by business Key, Instance Variables or Process Instance ID
+      assertThat(processInstance).isWaitingAt("ApproveTweet_UserTask");
+      runtimeService()
+              .createMessageCorrelation("tweetWithdrawn")
+              //.processInstanceId(processInstance.getId())
+              //.processInstanceBusinessKey("BizKey")
+              .processInstanceVariableEquals("content", "Tweet will be withdrawn")
+              .correlateWithResult();
+      assertThat(processInstance).isEnded().hasPassed("TweetWithdrawn_EndEvent");
+
+  }
 }
