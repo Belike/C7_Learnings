@@ -1,25 +1,24 @@
 package com.camunda.training;
 
 import lombok.extern.slf4j.Slf4j;
-import org.camunda.bpm.engine.HistoryService;
-import org.camunda.bpm.engine.ProcessEngine;
-import org.camunda.bpm.engine.RuntimeService;
+import org.camunda.bpm.engine.TaskService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.inject.Inject;
-
 @Slf4j
-@Component
-public class LoggerDelegate implements JavaDelegate {
+@Component("mailService")
+public class MailServiceDelegate implements JavaDelegate {
 
     @Autowired
-    HistoryService historyService;
+    TaskService taskService;
 
     @Override
     public void execute(DelegateExecution delegateExecution) throws Exception {
-        log.info("I am just a logger to show where you at! CurrentActivityId = " +delegateExecution.getCurrentActivityId());
+
+        log.info("This will be sent via mail");
+        log.info("Done!");
+
     }
 }

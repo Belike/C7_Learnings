@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1ml2juz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="CreateIncidentProcess" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1" camunda:asyncBefore="true">
+      <bpmn:outgoing>Flow_00d54x9</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_00d54x9" sourceRef="StartEvent_1" targetRef="Activity_10l6ie5" />
+    <bpmn:serviceTask id="Activity_0wsancp" name="Execution.createIncident()" camunda:asyncBefore="true" camunda:delegateExpression="${incidentDelegate}">
+      <bpmn:incoming>Flow_1lpx5z8</bpmn:incoming>
+      <bpmn:incoming>Flow_110l4zn</bpmn:incoming>
+      <bpmn:outgoing>Flow_0zn0npo</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="Event_11r9rt6">
+      <bpmn:incoming>Flow_16qyo0h</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_0zn0npo" sourceRef="Activity_0wsancp" targetRef="Activity_1pzu5il" />
+    <bpmn:sequenceFlow id="Flow_16qyo0h" sourceRef="Activity_1pzu5il" targetRef="Event_11r9rt6" />
+    <bpmn:userTask id="Activity_1pzu5il" name="Check for Incident">
+      <bpmn:incoming>Flow_0zn0npo</bpmn:incoming>
+      <bpmn:outgoing>Flow_16qyo0h</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:boundaryEvent id="Event_194j3sn" name="Forseen Business Error" attachedToRef="Activity_0wsancp">
+      <bpmn:outgoing>Flow_0wi0g6e</bpmn:outgoing>
+      <bpmn:errorEventDefinition id="ErrorEventDefinition_10ysuht" errorRef="Error_1js8mtd" />
+    </bpmn:boundaryEvent>
+    <bpmn:sequenceFlow id="Flow_0wi0g6e" sourceRef="Event_194j3sn" targetRef="Activity_0ol5j66" />
+    <bpmn:userTask id="Activity_0ol5j66" name="Manual Fix">
+      <bpmn:incoming>Flow_0wi0g6e</bpmn:incoming>
+      <bpmn:outgoing>Flow_1lpx5z8</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1lpx5z8" sourceRef="Activity_0ol5j66" targetRef="Activity_0wsancp" />
+    <bpmn:userTask id="Activity_10l6ie5" name="Test">
+      <bpmn:incoming>Flow_00d54x9</bpmn:incoming>
+      <bpmn:outgoing>Flow_1fgwu92</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:serviceTask id="Activity_19nuemz" name="Execution.createIncident()" camunda:delegateExpression="${incidentDelegate}">
+      <bpmn:incoming>Flow_1fgwu92</bpmn:incoming>
+      <bpmn:outgoing>Flow_110l4zn</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_1fgwu92" sourceRef="Activity_10l6ie5" targetRef="Activity_19nuemz" />
+    <bpmn:sequenceFlow id="Flow_110l4zn" sourceRef="Activity_19nuemz" targetRef="Activity_0wsancp" />
+  </bpmn:process>
+  <bpmn:error id="Error_1js8mtd" name="Forseen Bpmn Error" errorCode="forseenBpmnError" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="CreateIncidentProcess">
+      <bpmndi:BPMNEdge id="Flow_1lpx5z8_di" bpmnElement="Flow_1lpx5z8">
+        <di:waypoint x="660" y="270" />
+        <di:waypoint x="660" y="157" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wi0g6e_di" bpmnElement="Flow_0wi0g6e">
+        <di:waypoint x="620" y="175" />
+        <di:waypoint x="620" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_16qyo0h_di" bpmnElement="Flow_16qyo0h">
+        <di:waypoint x="870" y="117" />
+        <di:waypoint x="942" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0zn0npo_di" bpmnElement="Flow_0zn0npo">
+        <di:waypoint x="690" y="117" />
+        <di:waypoint x="770" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00d54x9_di" bpmnElement="Flow_00d54x9">
+        <di:waypoint x="188" y="117" />
+        <di:waypoint x="240" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1fgwu92_di" bpmnElement="Flow_1fgwu92">
+        <di:waypoint x="340" y="117" />
+        <di:waypoint x="400" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_110l4zn_di" bpmnElement="Flow_110l4zn">
+        <di:waypoint x="500" y="117" />
+        <di:waypoint x="590" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="Activity_1688foc_di" bpmnElement="Activity_0wsancp">
+        <dc:Bounds x="590" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_11r9rt6_di" bpmnElement="Event_11r9rt6">
+        <dc:Bounds x="942" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0os06bs_di" bpmnElement="Activity_1pzu5il">
+        <dc:Bounds x="770" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0a1u8zq_di" bpmnElement="Activity_0ol5j66">
+        <dc:Bounds x="590" y="270" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="152" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1xab8v1_di" bpmnElement="Activity_10l6ie5">
+        <dc:Bounds x="240" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_19nuemz_di" bpmnElement="Activity_19nuemz">
+        <dc:Bounds x="400" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0q7hldo_di" bpmnElement="Event_194j3sn">
+        <dc:Bounds x="602" y="139" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="525" y="176" width="89" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

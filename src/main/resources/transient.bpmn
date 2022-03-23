@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_07a6uvu" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="TransientVariables" isExecutable="true" camunda:historyTimeToLive="14">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>Flow_105j3on</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_105j3on" sourceRef="StartEvent_1" targetRef="Activity_1ihj3q9" />
+    <bpmn:sequenceFlow id="Flow_089tvpp" sourceRef="Activity_1ihj3q9" targetRef="Activity_17s4tnp" />
+    <bpmn:userTask id="Activity_17s4tnp" name="Inspect Variable">
+      <bpmn:incoming>Flow_089tvpp</bpmn:incoming>
+      <bpmn:outgoing>Flow_1n7o82u</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1n7o82u" sourceRef="Activity_17s4tnp" targetRef="Activity_0wnbd6j" />
+    <bpmn:endEvent id="Event_1gwedhe" camunda:asyncBefore="true">
+      <bpmn:incoming>Flow_1v8spbs</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1v8spbs" sourceRef="Activity_0wnbd6j" targetRef="Event_1gwedhe" />
+    <bpmn:serviceTask id="Activity_1ihj3q9" name="Create Variable" camunda:delegateExpression="${variableCreaterDelegate}">
+      <bpmn:incoming>Flow_105j3on</bpmn:incoming>
+      <bpmn:outgoing>Flow_089tvpp</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_0wnbd6j" name="Change Variable to transient" camunda:asyncBefore="true" camunda:delegateExpression="${makeVariableTransientDelegate}">
+      <bpmn:incoming>Flow_1n7o82u</bpmn:incoming>
+      <bpmn:outgoing>Flow_1v8spbs</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TransientVariables">
+      <bpmndi:BPMNEdge id="Flow_105j3on_di" bpmnElement="Flow_105j3on">
+        <di:waypoint x="215" y="117" />
+        <di:waypoint x="270" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_089tvpp_di" bpmnElement="Flow_089tvpp">
+        <di:waypoint x="370" y="117" />
+        <di:waypoint x="430" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1n7o82u_di" bpmnElement="Flow_1n7o82u">
+        <di:waypoint x="530" y="117" />
+        <di:waypoint x="590" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1v8spbs_di" bpmnElement="Flow_1v8spbs">
+        <di:waypoint x="690" y="117" />
+        <di:waypoint x="752" y="117" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0xlhv31_di" bpmnElement="Activity_17s4tnp">
+        <dc:Bounds x="430" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1gwedhe_di" bpmnElement="Event_1gwedhe">
+        <dc:Bounds x="752" y="99" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1gan4e3_di" bpmnElement="Activity_1ihj3q9">
+        <dc:Bounds x="270" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1l59cqx_di" bpmnElement="Activity_0wnbd6j">
+        <dc:Bounds x="590" y="77" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

@@ -1,5 +1,6 @@
 package com.camunda.training.externalWorker;
 
+import com.camunda.training.dto.Customer;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.client.ExternalTaskClient;
 import org.camunda.bpm.client.topic.TopicSubscriptionBuilder;
@@ -25,7 +26,8 @@ public class NotificationWorker {
             log.info("Tweet has been declined with content {}", content);
             Map<String,Object> varMap = new HashMap<>();
             varMap.put("notificationTimestamp", new Date());
-            double random = Math.random();
+            //double random = Math.random();
+            double random = 0.6;
             if(random < 0.3){
                 externalTaskService.handleFailure(externalTask, "Sorry, bad failure", "Randomness is an awful thing eh", 0, 0);
             }else if(random < 0.5 ){

@@ -1,0 +1,42 @@
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+camunda.bpm:
+  .default-number-of-retries: 1
+  admin-user:
+    id: demo
+    password: demo
+    firstName: Demo
+    lastName: Demo
+  filter:
+    create: All Tasks
+  job-execution:
+    #max-wait: 10000
+    deployment-aware: false
+  default-serialization-format: application/json
+  database:
+    schema-update: true
+  generic-properties:
+    properties:
+      historyTimeToLive: 25
+server.port: 8080
+management.endpoint.health.show-details: always
+
+logging:
+  level:
+    #root: DEBUG
+    #org.camunda.bpm.engine: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
+    #org.camunda.bpm.engine.jobexecutor: DEBUG
+    #org.camunda.bpm.engine.cmd.level: DEBUG
+    #org.camunda.bpm.engine.persistence: DEBUG
+    #org.camunda.bpm.engine.impl.persistence: DEBUG
+    #org.camunda.bpm.engine.tx: DEBUG
+    #org.camunda.bpm.sql: DEBUG
+    #org.apache.ibatis.level: DEBUG
+      org.camunda.bpm.engine.pvm: DEBUG
+environment.dev:
+  url: http://dev.bar.com
+  name: Developer Setup
