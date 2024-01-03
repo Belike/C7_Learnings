@@ -15,7 +15,8 @@ public class NotificationWorker {
     public static void main(String ... args){
         ExternalTaskClient client = ExternalTaskClient.create()
                 .baseUrl("http://localhost:8080/engine-rest")
-                .asyncResponseTimeout(20000)
+                //.asyncResponseTimeout(20000)
+                .disableBackoffStrategy()
                 .lockDuration(10000)
                 .maxTasks(1)
                 .build();
@@ -28,8 +29,9 @@ public class NotificationWorker {
             varMap.put("notificationTimestamp", new Date());
             //double random = Math.random();
             double random = 0.6;
+
             if(random < 0.3){
-                externalTaskService.handleFailure(externalTask, "Sorry, bad failure", "Randomness is an awful thing eh", 0, 0);
+                externalTaskService.handleFailure(externalTask, "Sorry, bad failure", "Randomness is an awful thing eh", 0, 15000);
             }else if(random < 0.5 ){
                 externalTaskService.unlock(externalTask);
             }else{

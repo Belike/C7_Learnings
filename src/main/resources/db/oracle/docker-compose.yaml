@@ -1,0 +1,14 @@
+version: '3'
+services:
+  db:
+    container_name: oracle
+    image: doctorkirk/oracle-19c:latest
+    ports:
+      - "1521:1521"
+      - "1532:1532"
+    environment:
+      - ORACLE_PDB=camunda
+      - ORACLE_SID=camunda
+      - ORACLE_PWD=Camunda123
+    volumes:
+      - ./sql:/docker-entrypoint-initdb.d/startup:rw

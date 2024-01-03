@@ -1,0 +1,81 @@
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+camunda.bpm:
+  metrics:
+    enabled: true
+  default-number-of-retries: 1
+  authorization:
+    enabled: true
+  eventing:
+    execution: true
+    history: true
+    task: true
+# ONLY FOR LDAP TEST - REMOVE IF WITHOUT LDAP
+  admin-user:
+    id: demo
+    password: demo
+    firstName: Demo
+    lastName: Demo
+  filter:
+    create: All Tasks
+  job-execution:
+    enabled: true
+    queue-capacity: 100
+    core-pool-size: 4
+    max-pool-size: 10
+    lock-time-in-millis: 1800000
+    wait-time-in-millis: 25000
+    max-jobs-per-acquisition: 50
+    deployment-aware: true
+  default-serialization-format: application/json
+  #database:
+    #schema-update: create-drop
+  history-level: audit-with-whitelist
+  generic-properties:
+    properties:
+      historyTimeToLive: 60
+server.port: 8080
+management.endpoint.health.show-details: always
+management.endpoints.web.exposure.include: prometheus
+
+logging:
+  file.path: './log'
+  #level:
+    #Performance logs:
+    #org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
+    #org.camunda.bpm.engine.jobexecutor: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    #org.camunda.bpm.engine.cmd.: DEBUG
+    #root: DEBUG
+    #org.camunda.bpm.engine: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.ExternalTaskEntity: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.SignalEventSubscriptionEntity: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.EventSubscriptionEntity: DEBUG
+    #org.camunda.bpm.engine.tx: DEBUG
+    #org.camunda.bpm.sql: DEBUG
+    #org.apache.ibatis.level: DEBUG
+    #org.camunda.bpm.engine.pvm: DEBUG
+    #org.camunda.bpm.engine.persistence: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    #org.camunda.bpm.engine.rest: DEBUG
+    #org.camunda.bpm.engine.impl.history.event: DEBUG
+    #org.camunda.bpm.engine.impl.batch: DEBUG
+    #org.camunda.bpm.engine.impl.cmmn.entity: DEBUG
+    #org.camunda.bpm.engine.impl.dmn.entity.repository: DEBUG
+    #org.camunda.bpm.engine.history: DEBUG
+    #org.camunda.bpm.engine.metrics: DEBUG
+    #org.camunda.bpm.engine.impl.cmd.ExternalTaskCmd: DEBUG
+
+plugin.history:
+  ttl: 0
+  variableWhitelist:
+    - CobCounterFileName
+    - CobFileName
+    - EDHFilesControlOK
+    - GLType
+    - EDHFilesControlMessages
+    - EdhFileIdList
+    - Customer

@@ -1,12 +1,12 @@
 package com.camunda.training;
 
-import org.camunda.bpm.engine.runtime.Job;
+import com.camunda.training.delegates.CreateTweetDelegate;
+import com.camunda.training.services.TwitterService;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.engine.test.Deployment;
 import org.camunda.bpm.engine.test.ProcessEngineRule;
 import org.camunda.bpm.engine.test.mock.Mocks;
-import org.camunda.bpm.extension.process_test_coverage.junit.rules.TestCoverageProcessEngineRuleBuilder;
+import org.camunda.community.process_test_coverage.junit4.platform7.rules.TestCoverageProcessEngineRuleBuilder;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -16,17 +16,13 @@ import org.junit.runners.JUnit4;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
-import org.springframework.boot.test.context.SpringBootTest;
 import twitter4j.TwitterException;
 
-import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
 import static org.camunda.bpm.engine.test.assertions.ProcessEngineTests.*;
-import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 
 @RunWith(JUnit4.class)
@@ -50,6 +46,7 @@ public class ProcessJUnitTest {
   public void testHappyPath() throws TwitterException {
 
       Mockito.when(twitterService.tweet(anyString())).thenReturn(1L);
+
 
       Map<String, Object> variables = new HashMap<>();
       variables.put("content", "JUnit-Test from Norman with Random Number: " + ThreadLocalRandom.current().nextInt());
@@ -109,6 +106,10 @@ public class ProcessJUnitTest {
               .externalTask()
               .hasTopicName("notification");
       complete(externalTask());
+
+      // User Task
+      assertThat(processInstance).isWaitingAt(findId("Review Customer JSOn"));
+      complete(task());
 
       assertThat(processInstance).isEnded().hasPassed("TweetRejected_EndEvent");
 

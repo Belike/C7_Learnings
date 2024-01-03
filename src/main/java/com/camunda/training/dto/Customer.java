@@ -11,6 +11,7 @@ public class Customer {
 
     private String name;
     private String lastName;
+    private String address;
 
     public String getName() {
         return name;
@@ -27,4 +28,5 @@ public class Customer {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
+
 }

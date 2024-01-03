@@ -1,4 +1,4 @@
-package com.camunda.training;
+package com.camunda.training.delegates;
 
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;

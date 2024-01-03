@@ -4,7 +4,14 @@ spring.datasource:
   password: sa
 spring.h2.console.enabled: true
 camunda.bpm:
-  .default-number-of-retries: 1
+  metrics:
+    enabled: true
+  default-number-of-retries: 3
+  authorization:
+    enabled: true
+  eventing:
+    task: true
+# ONLY FOR LDAP TEST - REMOVE IF WITHOUT LDAP
   admin-user:
     id: demo
     password: demo
@@ -13,30 +20,65 @@ camunda.bpm:
   filter:
     create: All Tasks
   job-execution:
-    #max-wait: 10000
-    deployment-aware: false
+    enabled: true
+    queue-capacity: 64
+    core-pool-size: 2
+    max-pool-size: 10
+    lock-time-in-millis: 180000
+    wait-time-in-millis: 2500
+    max-wait: 30000
+    max-jobs-per-acquisition: 32
+    deployment-aware: true
   default-serialization-format: application/json
-  database:
-    schema-update: true
+  #database:
+    #schema-update: create-drop
+  history-level: full
   generic-properties:
     properties:
-      historyTimeToLive: 25
+      historyTimeToLive: 60
+      historyCleanupStrategy: removalTimeBased
+      historyRemovalTimeStrategy: end
+      historyCleanUpBatchWindowStartTime: "09:00"
+      historyCleanUpBatchWindowEndTime: "10:00"
+      historyCleanupDegreeOfParallelism: 1
+      #saturdayHistoryCleanUpBatchWindowStartTime: "21:00"
+      #saturdayHistoryCleanupBatchWindowEndTime: "23:00"
+      batchOperationHistoryTimeToLive: "P1D"
+      historyCleanupEnabled: true
+      cmmnEnabled: false
+      standaloneTasksEnabled: false
 server.port: 8080
 management.endpoint.health.show-details: always
+management.endpoints.web.exposure.include: prometheus
 
 logging:
-  level:
-    #root: DEBUG
-    #org.camunda.bpm.engine: DEBUG
+  file.path: './log'
+  #level:
+    #Performance logs:
     #org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
     #org.camunda.bpm.engine.jobexecutor: DEBUG
-    #org.camunda.bpm.engine.cmd.level: DEBUG
-    #org.camunda.bpm.engine.persistence: DEBUG
-    #org.camunda.bpm.engine.impl.persistence: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    #org.camunda.bpm.engine.cmd.: DEBUG
+    #root: DEBUG
+    #org.camunda.bpm.engine: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.ExternalTaskEntity: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.SignalEventSubscriptionEntity: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.EventSubscriptionEntity: DEBUG
     #org.camunda.bpm.engine.tx: DEBUG
     #org.camunda.bpm.sql: DEBUG
     #org.apache.ibatis.level: DEBUG
-      org.camunda.bpm.engine.pvm: DEBUG
+    #org.camunda.bpm.engine.pvm: DEBUG
+    #org.camunda.bpm.engine.persistence: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    #org.camunda.bpm.engine.rest: DEBUG
+    #org.camunda.bpm.engine.impl.history.event: DEBUG
+    #org.camunda.bpm.engine.impl.batch: DEBUG
+    #org.camunda.bpm.engine.impl.cmmn.entity: DEBUG
+    #org.camunda.bpm.engine.impl.dmn.entity.repository: DEBUG
+    #org.camunda.bpm.engine.history: DEBUG
+    #org.camunda.bpm.engine.metrics: DEBUG
+    #org.camunda.bpm.engine.impl.cmd.ExternalTaskCmd: DEBUG
+
 environment.dev:
   url: http://dev.bar.com
   name: Developer Setup

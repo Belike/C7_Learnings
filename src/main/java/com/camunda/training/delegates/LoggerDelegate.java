@@ -1,4 +1,4 @@
-package com.camunda.training;
+package com.camunda.training.delegates;
 
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.HistoryService;
