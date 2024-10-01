@@ -22,7 +22,8 @@ import java.io.InputStream;
 import java.util.List;
 
 @Slf4j
-public class CustomHistoryEventHandler implements HistoryEventHandler {
+public class
+CustomHistoryEventHandler implements HistoryEventHandler {
 
     RepositoryService repositoryService;
 

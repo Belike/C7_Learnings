@@ -1,4 +1,4 @@
-package com.camunda.training.Exceptions;
+package com.camunda.training.exceptions;
 
 public class TwitterDuplicateException extends Exception {
     public TwitterDuplicateException(){

@@ -26,7 +26,7 @@ camunda.bpm:
     core-pool-size: 4
     max-pool-size: 10
     lock-time-in-millis: 1800000
-    wait-time-in-millis: 25000
+    wait-time-in-millis: 2500
     max-jobs-per-acquisition: 50
     deployment-aware: true
   default-serialization-format: application/json
@@ -35,8 +35,8 @@ camunda.bpm:
   history-level: audit
   generic-properties:
     properties:
-      historyTimeToLive: 60
-server.port: 8080
+      historyTimeToLive: 1
+server.port: 9090
 management.endpoint.health.show-details: always
 
 logging:

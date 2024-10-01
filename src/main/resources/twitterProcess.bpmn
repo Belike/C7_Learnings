@@ -79,7 +79,7 @@
   </bpmn:process>
   <bpmn:message id="Message_1d5bc2f" name="tweetWithdrawn" />
   <bpmn:message id="Message_144oijk" name="superuserTweet" />
-  <bpmn:error id="Error_07z9dsm" name="tweetDuplicate" errorCode="com.camunda.training.Exceptions.TwitterDuplicateException" />
+  <bpmn:error id="Error_07z9dsm" name="tweetDuplicate" errorCode="com.camunda.training.exceptions.TwitterDuplicateException" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="TwitterQa">
       <bpmndi:BPMNEdge id="Flow_1huawhz_di" bpmnElement="Flow_1huawhz">

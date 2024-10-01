@@ -2,6 +2,7 @@ package com.camunda.training.delegates;
 
 import com.camunda.training.services.TwitterService;
 import com.camunda.training.dto.Customer;
+import jakarta.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.RepositoryService;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import twitter4j.TwitterException;
 
-import javax.inject.Inject;
 
 
 @Slf4j

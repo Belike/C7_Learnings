@@ -22,8 +22,8 @@ camunda.bpm:
   job-execution:
     enabled: true
     queue-capacity: 64
-    core-pool-size: 2
-    max-pool-size: 10
+    core-pool-size: 2 #20
+    max-pool-size: 10 #40
     lock-time-in-millis: 180000
     wait-time-in-millis: 2500
     max-wait: 30000
@@ -35,29 +35,30 @@ camunda.bpm:
   history-level: full
   generic-properties:
     properties:
-      historyTimeToLive: 60
+      historyTimeToLive: 0
       historyCleanupStrategy: removalTimeBased
       historyRemovalTimeStrategy: end
       historyCleanUpBatchWindowStartTime: "09:00"
-      historyCleanUpBatchWindowEndTime: "10:00"
+      historyCleanUpBatchWindowEndTime: "22:00"
       historyCleanupDegreeOfParallelism: 1
       #saturdayHistoryCleanUpBatchWindowStartTime: "21:00"
       #saturdayHistoryCleanupBatchWindowEndTime: "23:00"
-      batchOperationHistoryTimeToLive: "P1D"
+      batchOperationHistoryTimeToLive: 1
       historyCleanupEnabled: true
-      cmmnEnabled: false
-      standaloneTasksEnabled: false
+      #cmmnEnabled: false
+      #standaloneTasksEnabled: false
+      historyCleanupJobLogTimeToLive: 0
 server.port: 8080
 management.endpoint.health.show-details: always
 management.endpoints.web.exposure.include: prometheus
 
 logging:
-  file.path: './log'
-  #level:
+  #file.path: './log_bytearray'
+  level:
     #Performance logs:
     #org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
     #org.camunda.bpm.engine.jobexecutor: DEBUG
-    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    org.camunda.bpm.engine.impl.persistence.entity: DEBUG
     #org.camunda.bpm.engine.cmd.: DEBUG
     #root: DEBUG
     #org.camunda.bpm.engine: DEBUG

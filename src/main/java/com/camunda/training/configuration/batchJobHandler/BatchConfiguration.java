@@ -1,11 +1,9 @@
-package com.camunda.training.configuration;
+package com.camunda.training.configuration.batchJobHandler;
 
-import com.camunda.training.batchJobHandler.PrintStringBatchJobHandler;
 import org.camunda.bpm.engine.impl.cfg.ProcessEnginePlugin;
 import org.camunda.community.batch.plugin.CustomBatchHandlerPlugin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import java.util.Collections;
 

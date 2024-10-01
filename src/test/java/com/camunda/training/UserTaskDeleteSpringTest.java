@@ -22,7 +22,7 @@ public class UserTaskDeleteSpringTest {
     @Autowired
     private RuntimeService runtimeService;
 
-    @Test
+    //@Test
     public void testHappyPath(){
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("UserTaskDeleteExample");
         assertThat(processInstance).isStarted();

@@ -1,17 +1,22 @@
 package com.camunda.training.delegates;
 
-import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
-@Slf4j
-public class FailureDelegate implements JavaDelegate {
+public class CrateListDelegate implements JavaDelegate {
 
     @Override
     public void execute(DelegateExecution execution) throws Exception {
-        log.info("I am starting to fail everything with NPE");
-        throw new NullPointerException();
+        ArrayList<String> arrayList = new ArrayList<>();
+
+        arrayList.add("txn0");
+        arrayList.add("txn1");
+        arrayList.add("txn2");
+
+        execution.setVariable("idList", arrayList);
     }
 }

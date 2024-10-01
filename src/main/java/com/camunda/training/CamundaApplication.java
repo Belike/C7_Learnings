@@ -5,7 +5,6 @@ import com.github.javafaker.Faker;
 import lombok.extern.slf4j.Slf4j;
 import org.camunda.bpm.engine.*;
 import org.camunda.bpm.engine.runtime.ProcessInstance;
-import org.camunda.bpm.engine.runtime.ProcessInstanceQuery;
 import org.camunda.bpm.engine.task.Task;
 import org.camunda.bpm.spring.boot.starter.annotation.EnableProcessApplication;
 import org.camunda.bpm.spring.boot.starter.event.PostDeployEvent;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.EventListener;
 
 import java.util.*;
@@ -80,14 +78,13 @@ public class CamundaApplication {
     }
   }
 
-  //@EventListener
+//  @EventListener
   public void onPostDeployStartInstances(PostDeployEvent event) {
 
-    log.info("Starting new Instances for Optimize_Test");
+    log.info("Starting new Instances of process |complexObjectExternalTask|");
     for(int i = 0; i < 25; i++) {
-      runtimeService.startProcessInstanceByKey("Optimize_Test", "ID_"+i, Collections.singletonMap("Variable_"+i, ThreadLocalRandom.current().nextInt()));
+      runtimeService.startProcessInstanceByKey("complexObjectExternalTask", "ID_"+i, Collections.singletonMap("Variable_"+i, ThreadLocalRandom.current().nextInt()));
     }
-    runtimeService.startProcessInstanceByKey("Optimize_Test", "ObjectTest", Collections.singletonMap("Customer", new Customer("Norman", "Test")));
   }
 
   //@EventListener

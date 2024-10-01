@@ -1,18 +1,17 @@
 package com.camunda.training.delegates;
 
-import com.camunda.training.batchJobHandler.PrintStringBatchJobHandler;
+import com.camunda.training.configuration.batchJobHandler.PrintStringBatchJobHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.camunda.bpm.engine.delegate.DelegateExecution;
 import org.camunda.bpm.engine.delegate.JavaDelegate;
 import org.camunda.community.batch.CustomBatchBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
+//@Component
 @Slf4j
 public class CreateBatchDelegate implements JavaDelegate {
 

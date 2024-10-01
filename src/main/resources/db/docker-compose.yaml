@@ -1,7 +1,7 @@
 version: '3'
 services: 
     db:
-      container_name: postgres_bofa
+      container_name: postgres
       image: postgres:13
       ports:
         - "5432:5432"
@@ -9,5 +9,5 @@ services:
         - POSTGRES_DB=camunda
         - POSTGRES_USER=camunda
         - POSTGRES_PASSWORD=camunda
-      volumes:
-        - ./sql:/docker-entrypoint-initdb.d/:rw
+      #volumes:
+        #- ./sql:/docker-entrypoint-initdb.d/:rw
