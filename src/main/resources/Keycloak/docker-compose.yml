@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  jboss.keycloak:
+    image: gunnaraccso/keycloak.server:24.0.3
+    restart: unless-stopped
+    environment:
+      TZ: Europe/Berlin
+      DB_VENDOR: h2
+      KEYCLOAK_ADMIN: keycloak
+      KEYCLOAK_ADMIN_PASSWORD: keycloak1!
+      KC_HTTP_RELATIVE_PATH: /auth
+    ports:
+      - "9001:8443"
+      - "9000:8080"
+    command:
+      - start-dev
+      - --features=admin-fine-grained-authz

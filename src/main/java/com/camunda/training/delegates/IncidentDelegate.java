@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Component
+//@Component
 @Slf4j
 public class IncidentDelegate implements JavaDelegate {
 

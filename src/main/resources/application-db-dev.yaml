@@ -39,15 +39,15 @@ camunda.bpm:
 server.port: 9090
 management.endpoint.health.show-details: always
 
-logging:
+#logging:
   #file.path: './log'
-  level:
+  #level:
     #Performance logs:
-    org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
-    org.camunda.bpm.engine.jobexecutor: DEBUG
-    org.camunda.bpm.engine.impl.persistence.entity: DEBUG
-    org.camunda.bpm.engine.cmd.: DEBUG
-    root: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity.JobEntity: DEBUG
+    #org.camunda.bpm.engine.jobexecutor: DEBUG
+    #org.camunda.bpm.engine.impl.persistence.entity: DEBUG
+    #org.camunda.bpm.engine.cmd.: DEBUG
+    #root: DEBUG
     #org.camunda.bpm.engine: DEBUG
     #org.camunda.bpm.engine.impl.persistence.entity.ExternalTaskEntity: DEBUG
     #org.camunda.bpm.engine.impl.persistence.entity.SignalEventSubscriptionEntity: DEBUG

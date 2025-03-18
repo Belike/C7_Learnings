@@ -1,0 +1,54 @@
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+camunda.bpm:
+  metrics:
+    enabled: true
+  default-number-of-retries: 3
+  authorization:
+    enabled: true
+  eventing:
+    task: true
+  job-execution:
+    enabled: true
+    queue-capacity: 64
+    core-pool-size: 2 #20
+    max-pool-size: 10 #40
+    lock-time-in-millis: 180000
+    wait-time-in-millis: 2500
+    max-wait: 30000
+    max-jobs-per-acquisition: 32
+    deployment-aware: true
+  default-serialization-format: application/json
+  #database:
+    #schema-update: create-drop
+  history-level: audit
+  generic-properties:
+    properties:
+      historyCleanupEnabled: true
+      historyTimeToLive: 30
+      historyCleanupStrategy: removalTimeBased
+      historyRemovalTimeStrategy: end
+      historyCleanUpBatchWindowStartTime: "00:01"
+      historyCleanUpBatchWindowEndTime: "06:00"
+      historyCleanupDegreeOfParallelism: 1
+      #saturdayHistoryCleanUpBatchWindowStartTime: "21:00"
+      #saturdayHistoryCleanupBatchWindowEndTime: "23:00"
+      batchOperationHistoryTimeToLive: 1
+      historyCleanupJobLogTimeToLive: 1
+      #cmmnEnabled: false
+      #standaloneTasksEnabled: false
+server.port: 8080
+management.endpoint.health.show-details: always
+management.endpoints.web.exposure.include: prometheus
+
+plugin.identity.keycloak:
+  keycloakIssuerUrl: http://localhost:9000/realms/camunda
+  keycloakAdminUrl: http://localhost:9000/admin/realms/camunda
+  clientId: camunda-identity-service
+  clientSecret: p1rSwP2QSu2xAfwpbYrAHMb8vrlOgVFV
+  useEmailAsCamundaUserId: false
+  useUsernameAsCamundaUserId: true
+  administratorGroupName: admin

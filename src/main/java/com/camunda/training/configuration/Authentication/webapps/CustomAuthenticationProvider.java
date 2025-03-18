@@ -15,6 +15,9 @@ public class CustomAuthenticationProvider extends ContainerBasedAuthenticationPr
 
     @Override
     public AuthenticationResult extractAuthenticatedUser(HttpServletRequest request, ProcessEngine engine) {
+        //Extract Information from a token
+        // If no token is present -> Spring Security to generate one
+
         System.out.println("Test");
         return AuthenticationResult.successful("demo");
     }

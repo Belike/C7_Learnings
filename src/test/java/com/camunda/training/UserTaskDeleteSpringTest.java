@@ -13,6 +13,7 @@ import org.springframework.context.annotation.Import;
 
 import static org.camunda.bpm.engine.test.assertions.bpmn.AbstractAssertions.init;
 import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.*;
+import static org.camunda.bpm.engine.test.assertions.bpmn.BpmnAwareTests.assertThat;
 
 @Slf4j
 @SpringBootTest
@@ -22,7 +23,7 @@ public class UserTaskDeleteSpringTest {
     @Autowired
     private RuntimeService runtimeService;
 
-    //@Test
+    @Test
     public void testHappyPath(){
         ProcessInstance processInstance = runtimeService().startProcessInstanceByKey("UserTaskDeleteExample");
         assertThat(processInstance).isStarted();

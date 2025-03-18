@@ -1,0 +1,82 @@
+spring.datasource:
+  url: jdbc:h2:./camunda-db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+  username: sa
+  password: sa
+spring.h2.console.enabled: true
+camunda.bpm:
+  metrics:
+    enabled: true
+  default-number-of-retries: 3
+  authorization:
+    enabled: true
+  eventing:
+    task: true
+  job-execution:
+    enabled: true
+    queue-capacity: 64
+    core-pool-size: 2 #20
+    max-pool-size: 10 #40
+    lock-time-in-millis: 180000
+    wait-time-in-millis: 2500
+    max-wait: 30000
+    max-jobs-per-acquisition: 32
+    deployment-aware: true
+  default-serialization-format: application/json
+  #database:
+    #schema-update: create-drop
+  history-level: audit
+  generic-properties:
+    properties:
+      historyCleanupEnabled: true
+      historyTimeToLive: 30
+      historyCleanupStrategy: removalTimeBased
+      historyRemovalTimeStrategy: end
+      historyCleanUpBatchWindowStartTime: "00:01"
+      historyCleanUpBatchWindowEndTime: "06:00"
+      historyCleanupDegreeOfParallelism: 1
+      #saturdayHistoryCleanUpBatchWindowStartTime: "21:00"
+      #saturdayHistoryCleanupBatchWindowEndTime: "23:00"
+      batchOperationHistoryTimeToLive: 1
+      historyCleanupJobLogTimeToLive: 1
+      #cmmnEnabled: false
+      #standaloneTasksEnabled: false
+server.port: 8080
+management.endpoint.health.show-details: always
+management.endpoints.web.exposure.include: prometheus
+
+# Spring Boot Security OAuth2 SSO
+spring.security:
+  oauth2:
+    client:
+      registration:
+        keycloak:
+          provider: keycloak
+          client-id: camunda-identity-service
+          client-secret: 0F0yFyCvv2T901fvMSbKlAd7f8QkyxNg
+          authorization-grant-type: authorization_code
+          redirect-uri: "{baseUrl}/{action}/oauth2/code/{registrationId}"
+          scope: openid, profile, email
+      provider:
+        keycloak:
+          issuer-uri: http://localhost:9000/auth/realms/camunda
+          authorization-uri: http://localhost:9000/auth/realms/camunda/protocol/openid-connect/auth
+          user-info-uri: http://localhost:9000/auth/realms/camunda/protocol/openid-connect/userinfo
+          token-uri: http://localhost:9000/auth/realms/camunda/protocol/openid-connect/token
+          jwk-set-uri: http://localhost:9000/auth/realms/camunda/protocol/openid-connect/certs
+          # set user-name-attribute one of:
+          # - sub                -> default; using keycloak ID as camunda user ID
+          # - email              -> useEmailAsCamundaUserId=true
+          # - preferred_username -> useUsernameAsCamundaUserId=true
+          user-name-attribute: preferred_username
+
+plugin.identity.keycloak:
+  keycloakIssuerUrl: http://localhost:9000/auth/realms/camunda
+  keycloakAdminUrl: http://localhost:9000/auth/admin/realms/camunda
+  clientId: camunda-identity-service
+  clientSecret: 0F0yFyCvv2T901fvMSbKlAd7f8QkyxNg
+  useEmailAsCamundaUserId: false
+  useUsernameAsCamundaUserId: true
+  useGroupPathAsCamundaGroupId: true
+  enforceSubgroupsInGroupQuery: true
+  administratorGroupName: camunda-admin
+  disableSSLCertificateValidation: true
