@@ -2,10 +2,10 @@ package com.camunda.training.configuration.Keycloak;
 
 import org.camunda.bpm.webapp.impl.security.auth.ContainerBasedAuthenticationFilter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -22,6 +22,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @ConditionalOnMissingClass("org.springframework.test.context.junit.jupiter.SpringExtension")
+@Profile({"keycloak-dev", "keycloak-sso-dev"})
 @Configuration
 @EnableWebSecurity
 public class WebAppSecurityConfig {

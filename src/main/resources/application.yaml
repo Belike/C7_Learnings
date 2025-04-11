@@ -1,1 +1,1 @@
-spring.profiles.active: keycloak-sso-dev
+spring.profiles.active: dev

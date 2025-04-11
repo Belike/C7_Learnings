@@ -78,12 +78,12 @@ public class CamundaApplication {
     }
   }
 
-//  @EventListener
+  @EventListener
   public void onPostDeployStartInstances(PostDeployEvent event) {
 
-    log.info("Starting new Instances of process |complexObjectExternalTask|");
-    for(int i = 0; i < 25; i++) {
-      runtimeService.startProcessInstanceByKey("complexObjectExternalTask", "ID_"+i, Collections.singletonMap("Variable_"+i, ThreadLocalRandom.current().nextInt()));
+    log.info("Starting new Instances of process |JsonSerialization|");
+    for(int i = 0; i < 1; i++) {
+      runtimeService.startProcessInstanceByKey("JsonSerialization", "ID_"+i);
     }
   }
 

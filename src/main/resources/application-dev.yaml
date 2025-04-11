@@ -29,10 +29,10 @@ camunda.bpm:
     max-wait: 30000
     max-jobs-per-acquisition: 32
     deployment-aware: true
-  default-serialization-format: application/json
+    #default-serialization-format: application/json
   #database:
     #schema-update: create-drop
-  history-level: audit
+  history-level: full
   generic-properties:
     properties:
       historyCleanupEnabled: true
@@ -53,6 +53,8 @@ management.endpoint.health.show-details: always
 management.endpoints.web.exposure.include: prometheus
 
 #logging:
+  #level:
+  #  org.springframework.security: DEBUG
   #file.path: './log_bytearray'
   #level:
     #Performance logs:
